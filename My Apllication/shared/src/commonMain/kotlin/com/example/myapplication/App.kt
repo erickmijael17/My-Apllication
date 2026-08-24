@@ -1,25 +1,32 @@
 package com.example.myapplication
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.myapplication.ui.pantallas.CatalogoPantalla
+import com.example.myapplication.ui.pantallas.FormularioProducto
+import com.example.myapplication.ui.pantallas.catalogoDemo
 
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "¡Hola Mundo!",
-                style = MaterialTheme.typography.headlineLarge
+        // El estado vive AQUÍ, no dentro de los hijos
+        var productos by remember { mutableStateOf(catalogoDemo) }
+        Column(modifier = Modifier.fillMaxSize()) {
+            FormularioProducto(
+                alGuardar = { nuevo -> productos = productos + nuevo }
+            )
+            HorizontalDivider()
+            CatalogoPantalla(
+                productos = productos,
+                modifier = Modifier.weight(1f)
             )
         }
     }
