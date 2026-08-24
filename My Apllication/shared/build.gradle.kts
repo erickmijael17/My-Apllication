@@ -8,6 +8,7 @@ plugins {
 }
 
 kotlin {
+    jvm()
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -62,4 +63,17 @@ kotlin {
 
 dependencies {
     androidRuntimeClasspath(libs.compose.uiTooling)
+}
+
+// Configuración para permitir la ejecución de archivos main en el módulo shared
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
+
+compose.desktop {
+    application {
+        mainClass = "PlaygroundKt"
+    }
 }
